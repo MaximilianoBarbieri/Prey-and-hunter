@@ -56,6 +56,8 @@ public class Enemy : MonoBehaviour
     bool InFieldOfView(Vector3 endPos)
     {
         Vector3 dir = endPos - transform.position;
+        Debug.Log(dir);
+        Debug.Log(endPos);
         if (dir.magnitude > _viewRadius) return false;
         if (!InLineOfSight(transform.position, endPos)) return false;
         if (Vector3.Angle(transform.forward, dir) > _viewAngle / 2) return false;
