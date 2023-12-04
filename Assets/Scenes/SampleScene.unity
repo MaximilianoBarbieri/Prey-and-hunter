@@ -653,6 +653,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5197965199595909203, guid: f4c1e0cb13dd129489d7ff67cf7f0133, type: 3}
+      propertyPath: _findRadius
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7321773198286274465, guid: f4c1e0cb13dd129489d7ff67cf7f0133, type: 3}
       propertyPath: m_Name
       value: Node (1)
@@ -1253,7 +1257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5197965199595909203, guid: f4c1e0cb13dd129489d7ff67cf7f0133, type: 3}
       propertyPath: _findRadius
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7321773198286274465, guid: f4c1e0cb13dd129489d7ff67cf7f0133, type: 3}
       propertyPath: m_Name
@@ -2311,8 +2315,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02e046375ae624944ad41b45864d4dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  _speed: 3
   myInitialMaterialColor: {r: 0.045387268, g: 1, b: 0, a: 0}
+  _rend: {fileID: 0}
   wallLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -3768,7 +3773,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5197965199595909203, guid: f4c1e0cb13dd129489d7ff67cf7f0133, type: 3}
       propertyPath: _findRadius
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7321773198286274465, guid: f4c1e0cb13dd129489d7ff67cf7f0133, type: 3}
       propertyPath: m_Name
