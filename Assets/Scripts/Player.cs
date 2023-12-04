@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
 
         // Calcular la dirección del movimiento
-        Vector3 movement = new Vector3(horizontalInput, verticalInput, 0f).normalized;
+        Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput).normalized;
 
         // Mover al jugador
         MovePlayer(movement);
