@@ -6,10 +6,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Header("Properties")]
-    public float speed = 3f; // Velocidad de movimiento del jugador
-    Renderer _rend;
+    [SerializeField]private float _speed = 3f;
     public Color myInitialMaterialColor;
-    
+    [SerializeField] Renderer _rend;
+
     public LayerMask wallLayer; // Layer para las paredes
 
     private void Awake()
@@ -20,27 +20,21 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        // Obtener entrada del teclado
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        // Calcular la dirección del movimiento
         Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput).normalized;
 
-        // Mover al jugador
         MovePlayer(movement);
     }
 
     private void MovePlayer(Vector3 movement)
     {
-        // Calcular la posición objetivo
-        Vector3 targetPosition = transform.position + movement * (speed * Time.deltaTime);
+        Vector3 targetPosition = transform.position + movement * (_speed * Time.deltaTime);
 
-        // Verificar si hay colisión con las paredes
         Collider[] colliders = Physics.OverlapSphere(targetPosition, 0.2f, wallLayer);
         if (colliders.Length == 0)
         {
-            // Mover al jugador si no hay colisión con las paredes
             transform.position = targetPosition;
         }
     }

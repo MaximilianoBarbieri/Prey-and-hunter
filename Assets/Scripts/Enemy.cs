@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,23 +9,20 @@ public class Enemy : MonoBehaviour
     private int _currentNodePatrol = 0;
     public float velocidadMovimiento = 2f;
 
-    [Header("FOV")]
-    [SerializeField] private Player _player; //cuando ve al player
+    [Header("FOV")] [SerializeField] private Player _player; //cuando ve al player
     [SerializeField] LayerMask _obstacle; //layer que interrumpe su vista
 
     [SerializeField, Range(1, 10)] float _viewRadius;
     [SerializeField, Range(1, 360)] float _viewAngle;
 
-    void Start()
+    private void Update()
     {
-        //StartCoroutine(CheckFOVRepeatedly()); //Check de FOV en segundo plano
+        CheckFOV();
     }
 
     private void FixedUpdate()
     {
-        CheckFOV();
         Patrullar();
-        //CheckFOV(); //Check de FOV en segundo plano
     }
 
     void Patrullar() //TODO: Agregarlo a FSM
@@ -38,16 +36,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // Codigo Para chequear el FOV
-    IEnumerator CheckFOVRepeatedly()
-    {
-        while (true)
-        {
-            CheckFOV();
-            yield return null; // Espera un frame antes de la siguiente verificación
-        }
-    }
-    
     void CheckFOV()
     {
         _player.ChangeColor(InFieldOfView(_player.transform.position) ? Color.blue : _player.myInitialMaterialColor);

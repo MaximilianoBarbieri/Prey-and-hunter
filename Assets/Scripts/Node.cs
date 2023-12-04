@@ -1,55 +1,52 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Node : MonoBehaviour
 {
     [SerializeField] private List<Node> _neighbors = new();
+    [SerializeField] LayerMask _nodeLayer;
     [SerializeField] LayerMask _wallLayer;
+    [SerializeField] private float _findRadius;
+
     int _cost = 1;
     public int Cost => _cost;
 
-    // Start is called before the first frame update
     void Start()
     {
-        RealizarRaycasts();
+        DetectNeighborNodes();
     }
 
-    // Update is called once per frame
-    void Update()
+    void DetectNeighborNodes()
     {
-    }
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _findRadius);
 
-
-    void RealizarRaycasts()
-    {
-        // Direcciones en orden de las agujas del reloj (Norte, Este, Sur, Oeste)
-        Vector3[] direcciones = { Vector3.up, Vector3.right, Vector3.down, Vector3.left };
-
-        foreach (Vector3 direccion in direcciones)
+        foreach (Collider collider in colliders)
         {
-            // Lanzar un raycast en la dirección especificada
-            RaycastHit hit;
-
-            // Configurar la capa de máscara para incluir "Wall" y "Node"
-            int layerMask = LayerMask.GetMask("Wall", "Node");
-
-            // Realizar el raycast con la capa de máscara configurada
-            if (Physics.Raycast(transform.position, direccion, out hit, 5, layerMask))
-            {
-                Debug.DrawRay(transform.position, direccion * hit.distance, Color.red, 100f);
-
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Wall")) continue;
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Node"))
-                    _neighbors.Add(hit.transform.GetComponent<Node>());
-            }
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Node") &&
+                collider != this.GetComponent<Collider>() &&
+                InFieldOfView(collider.transform.position))
+                _neighbors.Add(collider.transform.GetComponent<Node>());
         }
     }
 
-    bool IsValidNeighbourd(Vector3 start, Vector3 end)
+    bool InFieldOfView(Vector3 endPos)
+    {
+        Vector3 dir = endPos - transform.position;
+        if (dir.magnitude > _findRadius) return false;
+        if (!InLineOfSight(transform.position, endPos)) return false;
+        return true;
+    }
+
+    bool InLineOfSight(Vector3 start, Vector3 end)
     {
         Vector3 dir = end - start;
         return !Physics.Raycast(start, dir, dir.magnitude, _wallLayer);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, _findRadius);
     }
 
     public List<Node> GetNeighbors()

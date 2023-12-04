@@ -111,6 +111,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _neighbors: []
+  _nodeLayer:
+    serializedVersion: 2
+    m_Bits: 64
   _wallLayer:
     serializedVersion: 2
     m_Bits: 128
+  _findRadius: 3
