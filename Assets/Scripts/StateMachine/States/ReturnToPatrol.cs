@@ -21,10 +21,11 @@ public class ReturnToPatrol : State
 
    public override void OnUpdate()
    {
-       _enemy.MoveTo(_enemy.patrolNodes[0].transform.position);
-       if (Vector3.Distance(_enemy.transform.position, _enemy.patrolNodes[0].transform.position) < 0.1f)
-       {
-            stateMachine.ChangeState(EnemyState.Patrol);
-        }
+       if (_enemy.InFieldOfView()) stateMachine.ChangeState(EnemyState.Chase);
+       if (Vector3.Distance(_enemy.transform.position, _enemy.patrolNodes[0].transform.position) < 0.01f)
+                   stateMachine.ChangeState(EnemyState.Patrol);
+        _enemy.MoveTo(_enemy.patrolNodes[0].transform.position);
+        
+        
    }
 }
