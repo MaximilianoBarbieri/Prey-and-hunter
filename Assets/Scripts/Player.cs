@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [Header("Properties")]
     [SerializeField]private float _speed = 3f;
     public Color myInitialMaterialColor;
-    [SerializeField] Renderer _rend;
+    Renderer _rend;
 
     public LayerMask wallLayer; // Layer para las paredes
 

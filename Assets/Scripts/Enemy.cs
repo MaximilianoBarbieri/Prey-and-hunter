@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Enemy : MonoBehaviour
 {
     [Header("PATROL")] [SerializeField] private List<Node> patrolNodes = new(); // Lista de nodos predeterminados
     private int _currentNodePatrol = 0;
-    public float velocidadMovimiento = 2f;
+    [SerializeField] private float _velocity = 2f;
 
     [Header("FOV")] [SerializeField] private Player _player; //cuando ve al player
     [SerializeField] LayerMask _obstacle; //layer que interrumpe su vista
@@ -25,10 +26,19 @@ public class Enemy : MonoBehaviour
         Patrullar();
     }
 
+    private void MoveTo(Vector3 dir)
+    {
+        dir -= transform.position;
+        dir = dir.normalized;
+        transform.forward = dir;
+        transform.position += transform.forward * (Time.deltaTime * _velocity);
+    }
+
     void Patrullar() //TODO: Agregarlo a FSM
     {
-        transform.position = Vector3.MoveTowards(transform.position, patrolNodes[_currentNodePatrol].transform.position,
-            velocidadMovimiento * Time.deltaTime);
+        /*transform.position = Vector3.MoveTowards(transform.position, patrolNodes[_currentNodePatrol].transform.position,
+            velocidadMovimiento * Time.deltaTime);*/
+        MoveTo(patrolNodes[_currentNodePatrol].transform.position);
 
         if (Vector3.Distance(transform.position, patrolNodes[_currentNodePatrol].transform.position) < 0.1f)
         {
