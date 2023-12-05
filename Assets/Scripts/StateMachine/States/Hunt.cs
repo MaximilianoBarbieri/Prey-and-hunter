@@ -22,6 +22,6 @@ public class Hunt : State
 
    public override void OnUpdate()
    {        
-    
+      _enemy.Hunt(); //Ir hacia el ultimo rastro del PJ
    }
 }
