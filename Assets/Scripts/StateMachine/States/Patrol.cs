@@ -19,6 +19,7 @@ public class Patrol : State
 
     public override void OnUpdate()
     {
+        Debug.Log("Esto en Patrol STATE");
         if (_enemy.InFieldOfView())
         {
             stateMachine.ChangeState(EnemyState.Chase);

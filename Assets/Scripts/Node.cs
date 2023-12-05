@@ -17,17 +17,6 @@ public class Node : MonoBehaviour
         _renderer = GetComponent<Renderer>();
         DetectNeighborNodes();
     }
-    
-    void OnMouseDown() //Objeto clickeado con collider
-    {
-        PathFindingManager.instance.SetMyStartingNode(this);
-    }
-
-    private void OnMouseOver() 
-    {
-        if(Input.GetMouseButtonDown(0)) PathFindingManager.instance.SetMyStartingNode(this);
-        if(Input.GetMouseButtonDown(1)) PathFindingManager.instance.SetMyGoalNode(this);
-    }
 
     void DetectNeighborNodes()
     {

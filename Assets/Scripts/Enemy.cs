@@ -8,10 +8,12 @@ using UnityEngine.Serialization;
 public class Enemy : MonoBehaviour
 {
     [Header("PATROL")] 
-    [SerializeField] public List<Node> patrolNodes = new(); // Lista de nodos predeterminados
+    [SerializeField] public List<Node> patrolNodes = new();
     [SerializeField] public int _currentNodePatrol = 0;
+    [SerializeField] public Node _currentNode; //Se crea esta var para saber en que nodo se encuentra si sale de patrol
     [SerializeField] private float _velocity = 2f;
     
+    //PathFinding//
     private PathFinding _pf = new();
     private List<Vector3> _path = new();
 
@@ -44,6 +46,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        CheckCurrentNode();
         _sm.Update();
     }
 
@@ -91,7 +94,7 @@ public class Enemy : MonoBehaviour
 
     ////////////////////////////////////////////////////////////////
     
-    public void PatrolAStar()
+    public void PatrolAStar() //Patrullaje de la lista en bucle
     {
         if (_currentNodePatrol < patrolNodes.Count - 1 && _path.Count == 0) // Generar el nuevo camino si el camino actual está vacío
             _path = _pf.AStar(patrolNodes[_currentNodePatrol], patrolNodes[_currentNodePatrol + 1]);
@@ -111,9 +114,7 @@ public class Enemy : MonoBehaviour
                 // Verificar si llegamos al último nodo en la patrulla
                 if (_path.Count == 0)
                 {
-                    Debug.Log("ANTES "+ _currentNodePatrol);
                     _currentNodePatrol++;
-                    Debug.Log("ME SUME "+ _currentNodePatrol);
                     // Si llegamos al último nodo, volver al primero para repetir en bucle
                     if (_currentNodePatrol == patrolNodes.Count)
                         _currentNodePatrol = 0;
@@ -126,6 +127,47 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
+    }
+    
+    public void ChasePlayer() //Cazar al jugador sabiendo el ultimo nodo donde se encontro
+    {
+        Debug.Log("Estoy en chaseplayer metod");
+        if (_player.GetLastNode() != null)
+        {
+            _path = _pf.AStar(_currentNode, _player.GetLastNode());
+            if (_path?.Count > 0)
+            {
+                _path.Reverse();
+                TravelPath();
+            }
+        }
+    }
+    
+    private void TravelPath()
+    {
+        Vector3 target = _path[0] - Vector3.forward;
+        Vector3 dir = target - transform.position;
+        transform.position += dir.normalized * _velocity * Time.deltaTime;
+
+        if (Vector3.Distance(target, transform.position) <= 0.1f) _path.RemoveAt(0);
+    }
+    
+    private void CheckCurrentNode()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 0.5f);
+
+        foreach (Collider collider in colliders)
+        {
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Node")) 
+                _currentNode = collider.transform.GetComponent<Node>();
+        }
+    }
+    
+    //Debug Radius//
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireSphere(transform.position, 0.5f);
     }
     
 }
