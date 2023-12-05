@@ -7,13 +7,26 @@ public class Node : MonoBehaviour
     [SerializeField] LayerMask _nodeLayer;
     [SerializeField] LayerMask _wallLayer;
     [SerializeField] private float _findRadius;
+    private Renderer _renderer;
 
     int _cost = 1;
     public int Cost => _cost;
 
     void Start()
     {
+        _renderer = GetComponent<Renderer>();
         DetectNeighborNodes();
+    }
+    
+    void OnMouseDown() //Objeto clickeado con collider
+    {
+        PathFindingManager.instance.SetMyStartingNode(this);
+    }
+
+    private void OnMouseOver() 
+    {
+        if(Input.GetMouseButtonDown(0)) PathFindingManager.instance.SetMyStartingNode(this);
+        if(Input.GetMouseButtonDown(1)) PathFindingManager.instance.SetMyGoalNode(this);
     }
 
     void DetectNeighborNodes()
@@ -48,7 +61,16 @@ public class Node : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, _findRadius);
     }
+    
+    public void NewColor(Color color)
+    {
+        _renderer.material.color = color;
+    }
 
+    public Color PreviousColor()
+    {
+        return _renderer.material.color;
+    }
     public List<Node> GetNeighbors()
     {
         return _neighbors;

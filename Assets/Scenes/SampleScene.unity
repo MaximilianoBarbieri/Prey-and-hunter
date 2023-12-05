@@ -2095,6 +2095,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2151537416054840397, guid: f4c1e0cb13dd129489d7ff67cf7f0133, type: 3}
   m_PrefabInstance: {fileID: 756956170}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &802832297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 802832299}
+  - component: {fileID: 802832298}
+  m_Layer: 0
+  m_Name: PM
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &802832298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802832297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcead941a8c45514da13a1942ce61826, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pfType: 3
+  _startingNode: {fileID: 0}
+  _goalNode: {fileID: 0}
+  _startingNodeColor: {r: 0.9858491, g: 0.99678135, b: 1, a: 0}
+  _goalNodeColor: {r: 1, g: 0, b: 0, a: 0}
+  _previousNodeColor: {r: 0, g: 0.11449814, b: 1, a: 0}
+--- !u!4 &802832299
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802832297}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.2104551, y: 1.2929354, z: 1.3266202}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &807698167
 GameObject:
   m_ObjectHideFlags: 0
@@ -2410,10 +2460,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3
-  myInitialMaterialColor: {r: 0, g: 0, b: 0, a: 1}
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!135 &876013154
 SphereCollider:
   m_ObjectHideFlags: 0
