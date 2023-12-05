@@ -2124,7 +2124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcead941a8c45514da13a1942ce61826, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pfType: 3
+  pfType: 0
   _startingNode: {fileID: 0}
   _goalNode: {fileID: 0}
   _startingNodeColor: {r: 0.9858491, g: 0.99678135, b: 1, a: 0}

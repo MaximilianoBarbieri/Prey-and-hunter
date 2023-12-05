@@ -17,10 +17,8 @@ public class PathFindingManager : MonoBehaviour
     public Color _goalNodeColor;
     public Color _previousNodeColor;
 
-    PathFinding _pf = new PathFinding();
-
-    //[SerializeField] GridGenerator _grid;
-
+    PathFinding _pf = new();
+    
     private void Awake()
     {
         if (instance == null)
@@ -60,7 +58,6 @@ public class PathFindingManager : MonoBehaviour
         {
             _startingNode.PreviousColor();
             _goalNode.PreviousColor();
-            //ExecutePathfindingCoroutine();
             StartCoroutine(_pfCoroutine[pfType](_startingNode, _goalNode));
         }
 
@@ -73,31 +70,9 @@ public class PathFindingManager : MonoBehaviour
     public Node GetStartingNode() => _startingNode;
 
     public Node GetGoalNode() => _goalNode;
-
-    /*void ExecutePathfindingCoroutine()
-    {
-        switch(pfType)
-        {
-            case PathfindingType.BFS:
-                StartCoroutine(_pf.BFSCoroutine(_startingNode, _goalNode));
-                break;
-            case PathfindingType.Dijkstra:
-                StartCoroutine(_pf.DijkstraCoroutine(_startingNode, _goalNode));
-                break;
-            case PathfindingType.GreedyBFS:
-                //StartCoroutine(_pf.DijkstraCoroutine(_startingNode, _goalNode));
-                break;
-            case PathfindingType.AStar:
-                //StartCoroutine(_pf.DijkstraCoroutine(_startingNode, _goalNode));
-                break;
-        }
-    }*/
 }
 
 public enum PathfindingType
 {
-    BFS,
-    Dijkstra,
-    GreedyBFS,
     AStar
 }

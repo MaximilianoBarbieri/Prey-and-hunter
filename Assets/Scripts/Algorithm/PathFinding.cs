@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PathFinding
 {
-    public WaitForSeconds time = new WaitForSeconds(0.025f);
+    public WaitForSeconds time = new(0.025f);
     
     public List<Vector3> AStar(Node start, Node goal)
     {
