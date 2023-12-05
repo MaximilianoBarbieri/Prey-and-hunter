@@ -25,7 +25,7 @@ public class Patrol : State
         }
         else
         {
-            _enemy.Patrullar();
+            _enemy.PatrolAStar();
         }
     }
 }

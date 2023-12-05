@@ -40,13 +40,7 @@ public class Player : MonoBehaviour
     
     List<Vector3> GetPathBase()
     {
-        switch (PathFindingManager.instance.pfType)
-        {
-            case PathfindingType.AStar:
-                return _pf.AStar(PathFindingManager.instance.GetStartingNode(), PathFindingManager.instance.GetGoalNode());
-        }
-
-        return new List<Vector3>();
+        return _pf.AStar(PathFindingManager.instance.GetStartingNode(), PathFindingManager.instance.GetGoalNode());
     }
     
     //TODO: Adaptarlo a lo actual de ser necesario

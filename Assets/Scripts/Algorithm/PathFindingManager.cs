@@ -58,7 +58,7 @@ public class PathFindingManager : MonoBehaviour
         {
             _startingNode.PreviousColor();
             _goalNode.PreviousColor();
-            StartCoroutine(_pfCoroutine[pfType](_startingNode, _goalNode));
+            StartCoroutine(_pfCoroutine[0](_startingNode, _goalNode));
         }
 
         if(Input.GetKeyDown(KeyCode.Escape))

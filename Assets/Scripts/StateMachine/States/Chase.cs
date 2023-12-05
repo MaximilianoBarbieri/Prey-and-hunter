@@ -19,13 +19,14 @@ public class Chase : State
 
     public override void OnExit()
     {
-
+        
     }
 
     public override void OnUpdate()
     {
         if (_enemy.InFieldOfView())
-        { //TODO: Alertar a todos los enemy
+        { 
+            //TODO: Alertar a todos los enemy
             _enemy.MoveTo(_player.transform.position);
         }
         else
