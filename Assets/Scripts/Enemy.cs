@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     //PathFinding//
     private PathFinding _pf = new();
     private List<Vector3> _path = new();
+    public List<Vector3> Path => _path;
     private int _currentNodeIndex = 0;
 
     [Header("PATROL")] [SerializeField] public List<Node> patrolNodes = new();
@@ -46,14 +47,14 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         CheckCurrentNode();
-        //_sm.Update();
+        _sm.Update();
         
         if (Input.GetKeyDown(KeyCode.H))
         {
-            Hunt();
+            _sm.ChangeState(EnemyState.Hunt);
         }
     
-        if (_path.Count > 0) TravelPath(); //Viajo hasta el final de la ruta si es que lo hay
+        //if (_path.Count > 0) TravelPath(); //Viajo hasta el final de la ruta si es que lo hay
     }
 
     public void MoveTo(Vector3 dir)
@@ -106,7 +107,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void TravelPath()
+    public void TravelPath()
     {
         Vector3 target = _path[0];
         MoveTo(target);
@@ -126,7 +127,6 @@ public class Enemy : MonoBehaviour
         if (_path.Count > 0)
         {
             Vector3 target = _path[0];
-            //Vector3 dir = target - transform.position;
             MoveTo(target);
 
             // Verificar si hemos llegado al nodo de destino
@@ -146,8 +146,7 @@ public class Enemy : MonoBehaviour
                     if (_currentNodePatrol < patrolNodes.Count - 1)
                         _path = _pf.AStar(patrolNodes[_currentNodePatrol], patrolNodes[_currentNodePatrol + 1]);
                     else if
-                        (_currentNodePatrol ==
-                         patrolNodes.Count - 1) // Si llegamos al último nodo, volver al primero para repetir en bucle
+                        (_currentNodePatrol == patrolNodes.Count - 1) // Si llegamos al último nodo, volver al primero para repetir en bucle
                         _path = _pf.AStar(patrolNodes[_currentNodePatrol], patrolNodes[0]);
                 }
             }
