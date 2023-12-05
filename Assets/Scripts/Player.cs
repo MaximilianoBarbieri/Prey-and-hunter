@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     {
         _rend = GetComponent<Renderer>();
         myInitialMaterialColor = _rend.material.color;
+        RefreshLastNode();
     }
 
     private void Update()

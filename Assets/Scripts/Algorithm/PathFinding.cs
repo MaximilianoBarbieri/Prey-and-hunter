@@ -29,7 +29,6 @@ public class PathFinding
 
             foreach (var next in current.GetNeighbors())
             {
-                //if (next.Blocked) continue; SE COMENTO YA QUE NO DEBERIA HABER BLOQUEOS
 
                 int newCost = nodeCost[current] + next.Cost;
 
@@ -99,7 +98,6 @@ public class PathFinding
 
             foreach (var next in current.GetNeighbors())
             {
-                //if (next.Blocked) continue; SE COMENTO YA QUE NO DEBERIA HABER BLOQUEOS
 
                 int newCost = nodeCost[current] + next.Cost;
 

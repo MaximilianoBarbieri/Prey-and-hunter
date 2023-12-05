@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,9 +13,13 @@ public class Node : MonoBehaviour
     int _cost = 1;
     public int Cost => _cost;
 
-    void Start()
+    private void Awake()
     {
         _renderer = GetComponent<Renderer>();
+    }
+
+    void Start()
+    {
         DetectNeighborNodes();
     }
 

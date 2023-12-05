@@ -29,7 +29,8 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        transform.position = patrolNodes[_currentNodePatrol].transform.position;
+        transform.position = patrolNodes[_currentNodePatrol].transform.position; // ubico al enemy en el nodo 0
+        _currentNode = patrolNodes[0]; //Le asigno el nodo 0 de su patrullaje
     }
 
     private void Start()
@@ -41,20 +42,20 @@ public class Enemy : MonoBehaviour
         _sm.AddState(EnemyState.Hunt, new Hunt(this));
         _sm.AddState(EnemyState.ReturnToPatrol, new ReturnToPatrol(this));
 
-        _sm.ChangeState(EnemyState.Patrol); //Comienzo con el state Patrol
+        _sm.ChangeState(EnemyState.Patrol);
     }
 
     private void Update()
     {
         CheckCurrentNode();
+        
         _sm.Update();
         
         if (Input.GetKeyDown(KeyCode.H))
         {
             _sm.ChangeState(EnemyState.Hunt);
         }
-    
-        //if (_path.Count > 0) TravelPath(); //Viajo hasta el final de la ruta si es que lo hay
+        
     }
 
     public void MoveTo(Vector3 dir)
@@ -85,14 +86,11 @@ public class Enemy : MonoBehaviour
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
 
-    /// <summary>
-    /// PRUEBAS
-    /// </summary>
+    
     // Método para atrapar al jugador (si el jugador se encuentra dentro del InFieldOfView, deberá seguirlo)
     public void Chase()
     {
-        _path = _pf.AStar(_currentNode, _player.GetLastNode());
-        if (_path?.Count > 0) _path.Reverse();
+        //TODO Hacerlo de la manera antigua
     }
     
     
@@ -102,6 +100,8 @@ public class Enemy : MonoBehaviour
         _path = _pf.AStar(_currentNode, _player.GetLastNode());
         if (_path?.Count > 0)
         {
+            if (Vector3.Distance(_currentNode.transform.position, transform.position) >= 0.5f) //si estoy lejos vuelvo al nodo, evito traspasar paredes
+                _path.Add(_currentNode.transform.position);
             _path.Reverse();
             _currentNodeIndex = 0;
         }
@@ -115,7 +115,6 @@ public class Enemy : MonoBehaviour
         if (Vector3.Distance(target, transform.position) <= 0.1f) _path.RemoveAt(0);
     }
 
-    ////////////////////////////////////////////////////////////////
 
     public void PatrolAStar() //Patrullaje de la lista en bucle
     {
