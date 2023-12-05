@@ -5,47 +5,11 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    PathFinding _pf = new PathFinding();
-    List<Vector3> _path = new List<Vector3>();
-
-    [SerializeField] float _speed = 2.5f;
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            GoToStartingNode();
-            _path = GetPathBase();
-            if (_path?.Count > 0) _path.Reverse();
-        }
-
-        if (_path.Count > 0 && Input.GetKey(KeyCode.O)) TravelPath();
-    }
-
-    private void GoToStartingNode()
-    {
-        if (PathFindingManager.instance.GetStartingNode() == null) return;
-        transform.position = PathFindingManager.instance.GetStartingNode().transform.position;
-    }
-
-    private void TravelPath()
-    {
-        Vector3 target = _path[0];
-        Vector3 dir = target - transform.position;
-        transform.position += dir.normalized * (_speed * Time.deltaTime);
-
-        if (Vector3.Distance(target, transform.position) <= 0.1f) _path.RemoveAt(0);
-    }
-    
-    List<Vector3> GetPathBase()
-    {
-        return _pf.AStar(PathFindingManager.instance.GetStartingNode(), PathFindingManager.instance.GetGoalNode());
-    }
-    
-    //TODO: Adaptarlo a lo actual de ser necesario
-    /*[Header("Properties")]
+    [Header("Properties")]
     [SerializeField]private float _speed = 3f;
+    [SerializeField] private float _findRadius = 0.7f; //radio justo para que no toque otros
+    [SerializeField] private Node _lastNode;
+    
     public Color myInitialMaterialColor;
     Renderer _rend;
 
@@ -65,18 +29,43 @@ public class Player : MonoBehaviour
         Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput).normalized;
 
         MovePlayer(movement);
+
+        RefreshLastNode();
     }
 
     private void MovePlayer(Vector3 movement)
     {
         Vector3 targetPosition = transform.position + movement * (_speed * Time.deltaTime);
 
-        Collider[] colliders = Physics.OverlapSphere(targetPosition, 0.2f, wallLayer);
+        Collider[] colliders = Physics.OverlapSphere(targetPosition, 0.25f, wallLayer);
         if (colliders.Length == 0)
         {
             transform.position = targetPosition;
         }
     }
+
+    private void RefreshLastNode()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, _findRadius);
+
+        foreach (Collider collider in colliders)
+        {
+            if (collider.gameObject.layer == LayerMask.NameToLayer("Node")) 
+                _lastNode = collider.transform.GetComponent<Node>();
+        }
+    }
+
+    public Node GetLastNode()
+    {
+        return _lastNode;
+    }
     
-    public void ChangeColor(Color color) => _rend.material.color = color;*/
+    public void ChangeColor(Color color) => _rend.material.color = color; //TODO: ver si se usar este metodo
+    
+    //Debug Radius//
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, _findRadius);
+    }
 }
