@@ -85,14 +85,6 @@ public class Enemy : MonoBehaviour
     {
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
-
-    
-    // Método para atrapar al jugador (si el jugador se encuentra dentro del InFieldOfView, deberá seguirlo)
-    public void Chase()
-    {
-        //TODO Hacerlo de la manera antigua
-    }
-    
     
     // Método para cazar (deberá usar A* para ir del nodo actual hacia el último nodo donde estuvo el player)
     public void Hunt() //Funciona
@@ -113,6 +105,18 @@ public class Enemy : MonoBehaviour
         MoveTo(target);
 
         if (Vector3.Distance(target, transform.position) <= 0.1f) _path.RemoveAt(0);
+    }
+    
+    public void ReturnToPatrol() 
+    {
+        _path = _pf.AStar(_currentNode, patrolNodes[0]); //desde el ult nodo que toque hasta el 1ero del patrullaje
+        if (_path?.Count > 0)
+        {
+            if (Vector3.Distance(_currentNode.transform.position, transform.position) >= 0.5f) //si estoy lejos vuelvo al nodo, evito traspasar paredes
+                _path.Add(_currentNode.transform.position);
+            _path.Reverse();
+            _currentNodeIndex = 0;
+        }
     }
 
 

@@ -18,7 +18,6 @@ public class Hunt : State
 
     public override void OnExit()
     {
-        Debug.Log("OnExit Hunter");
     }
 
     public override void OnUpdate()
