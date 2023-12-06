@@ -14,6 +14,7 @@ public class ReturnToPatrol : State
     public override void OnEnter()
     {
         _enemy.ReturnToPatrol(); //obtengo la ruta de enemy a su origen de patrullaje
+        _enemy._currentNodePatrol = 0;
     }
 
     public override void OnExit()
@@ -33,6 +34,10 @@ public class ReturnToPatrol : State
         else if (Vector3.Distance(_enemy.transform.position, _enemy.patrolNodes[0].transform.position) <= 0.1f) //si estoy cerca de mi primer nodo de patrullaje, cambio a patrol
         {
             stateMachine.ChangeState(EnemyState.Patrol);
+        }
+        else
+        {
+            _enemy.MoveTo(_enemy._currentNode.transform.position);
         }
     }
 }

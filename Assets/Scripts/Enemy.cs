@@ -7,6 +7,8 @@ using UnityEngine.Serialization;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private String CurrentState;
+    
     //PathFinding//
     private PathFinding _pf = new();
     private List<Vector3> _path = new();
@@ -59,6 +61,7 @@ public class Enemy : MonoBehaviour
         {
             _sm.ChangeState(EnemyState.Hunt);
         }*/
+        CurrentState = _sm.getCurrentState();
     }
 
     public void MoveTo(Vector3 dir)
@@ -112,6 +115,10 @@ public class Enemy : MonoBehaviour
     
     public void ReturnToPatrol() 
     {
+        /*if (_currentNode == patrolNodes[0])
+        {
+            MoveTo(_currentNode.transform.position);
+        }*/
         _path = _pf.AStar(_currentNode, patrolNodes[0]); //desde el ult nodo que toque hasta el 1ero del patrullaje
         if (_path?.Count > 0)
         {
