@@ -26,7 +26,8 @@ public class Enemy : MonoBehaviour
     [SerializeField, Range(1, 10)] float _viewRadius;
     [SerializeField, Range(1, 360)] float _viewAngle;
 
-    StateMachine _sm;
+    private StateMachine _sm;
+    public String State => _sm.getCurrentState();
 
 
     private void Awake()
