@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//TODO: Realizar sistema A* para buscar el nodo 0, evitando que traspase las paredes
 public class ReturnToPatrol : State
 {
     private Enemy _enemy;

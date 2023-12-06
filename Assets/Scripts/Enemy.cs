@@ -50,12 +50,15 @@ public class Enemy : MonoBehaviour
         CheckCurrentNode();
         
         _sm.Update();
-        
-        if (Input.GetKeyDown(KeyCode.H))
+
+        if (Input.GetKey(KeyCode.H) && (!_sm.getCurrentState().Equals(EnemyState.Chase.ToString())))
         {
             _sm.ChangeState(EnemyState.Hunt);
         }
-        
+        /*if (!_sm.getCurrentState().Equals(EnemyState.Hunt.ToString())) //Si no estas Cazando al player
+        {
+            _sm.ChangeState(EnemyState.Hunt);
+        }*/
     }
 
     public void MoveTo(Vector3 dir)
@@ -86,7 +89,7 @@ public class Enemy : MonoBehaviour
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
     
-    // Método para cazar (deberá usar A* para ir del nodo actual hacia el último nodo donde estuvo el player)
+    // Metodo para cazar (debera usar A* para ir del nodo actual hacia el ultimo nodo donde estuvo el player)
     public void Hunt() //Funciona
     {
         _path = _pf.AStar(_currentNode, _player.GetLastNode());

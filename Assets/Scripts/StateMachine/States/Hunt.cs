@@ -22,9 +22,20 @@ public class Hunt : State
 
     public override void OnUpdate()
     {
-        if (_enemy.Path.Count > 0) //Viajo hasta el final de la ruta si es que lo hay
+        if (_enemy.InFieldOfView())
         {
-            _enemy.TravelPath();
+            stateMachine.ChangeState(EnemyState.Chase);
+        }
+        else
+        {
+            if (_enemy.Path.Count > 0) //Viajo hasta el final de la ruta si es que lo hay
+            {
+                _enemy.TravelPath();
+            }
+            else
+            {
+                stateMachine.ChangeState(EnemyState.ReturnToPatrol);   
+            }
         }
     }
 }

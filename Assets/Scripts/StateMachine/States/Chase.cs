@@ -6,7 +6,6 @@ public class Chase : State
 {
     private Enemy _enemy;
     private Player _player;
-    public bool oneShot = true;
     
     public Chase(Enemy enemy, Player player)
     {
