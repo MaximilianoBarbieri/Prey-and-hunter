@@ -1,2 +1,1 @@
-# Parcial-2---Gangone-Barbieri
- 
+Hello! This is a project that my colleague and I (RodrigoGangone) worked on for the Artificial Intelligence II course. In this project, a character must navigate a map while being chased by a hunter whenever it is within the hunter's line of sight/range. When the character is lost from sight, the hunter seeks the optimal path to resume its patrol.
